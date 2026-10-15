@@ -20,7 +20,7 @@ def define_path() -> dict:
             file_name = arg
         else:
             directories_list.append(arg)
-    directories = "/".join(directories_list)
+    directories = os.path.join(*directories_list) if directories_list else ""
     return (directories, file_name)
 
 
@@ -43,11 +43,12 @@ def create_file() -> None:
                 f'{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
             )
             line_counter = 1
-            input_text = input("Enter content line: ")
-            while input_text != "stop":
+            while True:
+                input_text = input("Enter content line: ")
+                if input_text == "stop":
+                    break
                 file.write(f"\n{line_counter} {input_text}")
                 line_counter += 1
-                input_text = input("Enter content line: ")
 
 
 create_file()
